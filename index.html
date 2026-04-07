@@ -826,7 +826,7 @@ async function obtenerProductosShopify() {
         // Convertimos los datos de ML al formato que tu código ya usa (Shopify style)
         return datos.results.map(prod => ({
             title: prod.title,
-            handle: prod.id,
+            handle: prod.id.replace("MLV", "MLV-"), // Agrega el guion necesario para la URL de MLV
             image: { src: prod.thumbnail.replace("-I.jpg", "-W.jpg") },
             variants: [{ price: prod.price }]
         }));
