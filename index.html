@@ -826,8 +826,9 @@ async function obtenerProductosShopify() {
         // Convertimos los datos de ML al formato que tu código ya usa (Shopify style)
         return datos.results.map(prod => ({
             title: prod.title,
-            handle: prod.id.replace("MLV", "MLV-"), // Agrega el guion necesario para la URL de MLV
-            image: { src: prod.thumbnail.replace("-I.jpg", "-W.jpg") },
+            link: prod.permalink, // Agrega esta: es el enlace real que da Mercado Libre
+image: { src: prod.thumbnail }, // Agrega esta: es la imagen segura por defecto
+            
             variants: [{ price: prod.price }]
         }));
     } catch (error) {
