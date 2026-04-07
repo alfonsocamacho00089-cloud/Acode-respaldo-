@@ -1,7 +1,13 @@
 {
   "name": "tupropina-api",
   "version": "1.0.0",
-  "description": "API para Shopify en Vercel",
+  "description": "API de prueba con Mercado Libre para TuPropina",
   "main": "api/products.js",
+  "scripts": {
+    "start": "node api/products.js"
+  },
+  "dependencies": {
+    "node-fetch": "^3.0.0"
+  },
   "license": "MIT"
 }
