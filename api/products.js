@@ -1,6 +1,14 @@
 export default async function handler(req, res) {
-    const tienda = "t4dns0-ds.myshopify.com";
-    const token = process.env.SHOPIFY_TOKEN;
+    const // URL de acceso libre (sin credenciales)
+const urlPrueba = "https://api.mercadolibre.com/sites/MLV/search?q=relojes&limit=5";
+
+fetch(urlPrueba)
+  .then(response => response.json())
+  .then(data => {
+    console.log("Aquí están tus productos de prueba:", data.results);
+  })
+  .catch(error => console.error("Error:", error));
+    
 
     // 1. Verificación de seguridad: ¿Vercel está leyendo la variable?
     if (!token) {
