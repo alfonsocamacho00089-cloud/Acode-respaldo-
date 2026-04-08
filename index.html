@@ -965,12 +965,10 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
         console.log('Notificaciones activadas.');
         
         // AQUÍ AGREGAS EL BLOQUE DEL TOKEN
-        getToken(messaging, { vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU' })
+        getToken(messaging, { vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62' })
           .then((currentToken) => {
             if (currentToken) {
               console.log('Tu Token es:', currentToken);
-                
-              
               // IMPORTANTE: Copia este token de la consola para probarlo 
               // en "Cloud Messaging" de Firebase.
             } else {
@@ -982,10 +980,8 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
           });
       }
     });
-
-
+  }
 </script>
-
 
 
 </body>
