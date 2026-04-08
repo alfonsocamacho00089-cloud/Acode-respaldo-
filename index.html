@@ -940,14 +940,16 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
-  // Esto pide permiso sin detener el resto de la página
-  if ('Notification' in window) {
+  // Reemplaza tus líneas 944 a 950 por esto:
+if ('Notification' in window) {
     Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        console.log('Notificaciones activadas.');
-      }
+        if (permission === 'granted') {
+            getToken(messaging, { vapidKey: 'TU_CLAVE_VAPID_AQUÍ' })
+                .then((token) => console.log("Token generado:", token))
+                .catch((err) => console.log("Error al obtener token:", err));
+        }
     });
-  }
+}
 
 </script>
 
