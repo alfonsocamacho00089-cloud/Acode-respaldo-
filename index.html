@@ -969,7 +969,7 @@ if ('Notification' in window) {
           if (token) {
             alert("TOKEN: " + token);
           } else {
-            alert("No hay token disponible");
+            navigator.clipboard.writeText(token).then(() => { alert("¡Copiado! Pégalo en tu bloc de notas"); });
           }
         })
         .catch((err) => {
