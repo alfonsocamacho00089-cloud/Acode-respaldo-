@@ -1,24 +1,29 @@
+// 1. Importar las librerías de compatibilidad (necesario en Service Workers)
 importScripts('https://www.gstatic.com/firebasejs/9.1.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.1.0/firebase-messaging-compat.js');
 
-// PEGA AQUÍ TUS MISMOS DATOS DE CONFIGURACIÓN
-firebase.initializeApp({
+// 2. Configuración (Usa tus mismos IDs de la consola de Firebase)
+const firebaseConfig = {
   apiKey: "AIzaSyCaUyhX2iBMl4A5xeKeu_4SeE6HClp4V1s",
-  authDomain: "real-market-elite-2025.firebaseapp.com",
-  projectId: "real-market-elite-2025",
-  storageBucket: "real-market-elite-2025.appspot.com",
+  authDomain: "TU_PROYECTO.firebaseapp.com",
+  projectId: "TU_PROYECTO_ID",
+  storageBucket: "TU_PROYECTO.appspot.com",
   messagingSenderId: "226489002778",
   appId: "1:226489002778:web:6722d21a9e78b33b5b1aa3"
-});
+};
 
-const messaging = getMessaging(app); 
-// Se importan funciones sueltas como "getMessaging"
-// Este código muestra la notificación cuando llega
+// 3. Inicializar
+firebase.initializeApp(firebaseConfig);
+const messaging = firebase.messaging();
+
+// 4. Manejar mensajes cuando la pestaña está cerrada o en segundo plano
 messaging.onBackgroundMessage((payload) => {
-  const notificationTitle = payload.notification.title;
+  console.log('[firebase-messaging-sw.js] Recibido:', payload);
+
+  const notificationTitle = payload.notification.title || "Nueva notificación";
   const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/logo.png' // Si tienes un logo en tu carpeta, pon el nombre aquí
+    body: payload.notification.body || "Tienes un nuevo mensaje.",
+    icon: '/logo.png' // Asegúrate de que esta ruta sea válida o quítala
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
