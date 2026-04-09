@@ -999,8 +999,7 @@ if ('Notification' in window) {
   console.log('Notificaciones activadas.');
 
   // ESTA ES LA LÍNEA QUE FALTA PARA DEFINIR EL REGISTRO
-  navigator.serviceWorker.register('/firebase-messaging-sw.js').then((registration) => {
-    
+  navigator.serviceWorker.register('./firebase-messaging-sw.js')
     // Ahora sí, usamos "registration" aquí adentro
     getToken(messaging, { 
       serviceWorkerRegistration: registration, 
