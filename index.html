@@ -1084,7 +1084,15 @@ alert("ERROR AL OBTENER TOKEN: " + err);
 
 
 
-  const messaging = getMessaging(app);
+  onMessage(messaging, (payload) => {
+  console.log('Notificación recibida:', payload);
+  // Busca el botón que dice "REVISAR" (o el nombre de tu pestaña) y le hace clic
+  const tabs = Array.from(document.querySelectorAll('button, div, a'));
+  const btnRevisar = tabs.find(el => el.textContent.trim().toUpperCase() === 'REVISAR');
+  if (btnRevisar) btnRevisar.click();
+  
+  alert("Mensaje de prueba: " + payload.notification.body);
+});
 
 
 
