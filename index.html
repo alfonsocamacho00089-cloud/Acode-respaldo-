@@ -941,53 +941,42 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
   const app = initializeApp(firebaseConfig);
   const messaging = getMessaging(app);
 
-  // Mensajes cuando la app está abierta (Primer plano)
+  // Escuchar mensajes cuando la app está abierta
   onMessage(messaging, (payload) => {
-    console.log('¡Mensaje recibido en vivo!', payload);
-    const pestañaRevisar = document.querySelector('[data-tab="REVISAR"]') || document.getElementById('tab-revisar');
-    if (pestañaRevisar) {
-        pestañaRevisar.style.backgroundColor = "#ffcc00"; 
-        pestañaRevisar.click(); 
-    }
-    alert("Prueba Exitosa: " + (payload.notification?.body || "Nuevo mensaje"));
+    console.log('Mensaje en primer plano:', payload);
+    alert("Notificación: " + (payload.notification?.body || "Nuevo mensaje"));
   });
 
-  // Registro y obtención de Token
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./firebase-messaging-sw.js')
-      .then((registration) => {
-        console.log('Service Worker registrado con éxito');
-        
-        return Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') {
-            // Llamada a getToken pasando el registro del SW
+  if ('Notification' in window) {
+    Notification.requestPermission().then((permission) => {
+      if (permission === 'granted') {
+        console.log('Notificaciones activadas.');
+
+        // Registramos el SW primero
+        navigator.serviceWorker.register('./firebase-messaging-sw.js')
+          .then((registration) => {
+            // Pasamos el registration al obtener el token (Esto evita que falle en móviles)
             return getToken(messaging, { 
               vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU',
               serviceWorkerRegistration: registration 
             });
-          }
-        });
-      })
-      .then((token) => {
-        // --- AQUÍ VA TU BLOQUE DE COPIADO ---
-        if (token) {
-            console.log("Token obtenido:", token);
-            alert("TOKEN: " + token);
-            // Intentar copiar al portapapeles
-            navigator.clipboard.writeText(token).then(() => {
-                console.log("¡Token copiado satisfactoriamente!");
-            }).catch(err => {
-                console.warn("No se pudo copiar automáticamente: ", err);
-            });
-        } else {
-            alert("No hay token disponible");
-        }
-        // ------------------------------------
-      })
-      .catch((err) => {
-        console.error("Error en el flujo de notificaciones:", err);
-        alert("ERROR AL OBTENER TOKEN: " + err);
-      });
+          })
+          .then((token) => {
+            if (token) {
+              console.log("Token:", token);
+              alert("TOKEN OBTENIDO");
+              // Copiado automático corregido (se hace si SI hay token)
+              navigator.clipboard.writeText(token);
+            } else {
+              console.warn("No se pudo obtener el token.");
+            }
+          })
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("ERROR: " + err);
+          });
+      }
+    });
   }
 </script>
 </body>
