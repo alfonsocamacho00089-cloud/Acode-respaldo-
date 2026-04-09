@@ -11,17 +11,14 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// Manejo en segundo plano
 messaging.onBackgroundMessage((payload) => {
-  console.log('[sw.js] Mensaje recibido:', payload);
-
-  const notificationTitle = payload.notification?.title || "DropisChat";
+  console.log('Mensaje recibido en segundo plano:', payload);
+  
+  const notificationTitle = payload.notification?.title || "DropisShop";
   const notificationOptions = {
     body: payload.notification?.body || "Nueva actualización disponible",
-    icon: './logo.png',  
-    badge: './badge.png',
-    vibrate: [200, 100, 200]
-tag: 'confirmacion-tasa'  // Opcional: evita que se amontonen las notificaciones
+    icon: '/logo.png',
+    badge: '/badge.png' // Opcional: icono pequeño en la barra de estado
   };
 
   return self.registration.showNotification(notificationTitle, notificationOptions);
