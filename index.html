@@ -996,43 +996,28 @@ if ('Notification' in window) {
     // El aviso de "Desea recibir notificaciones" sale gracias a la línea de arriba
 
     if (permission === 'granted') {
+  console.log('Notificaciones activadas.');
 
-      console.log('Notificaciones activadas.');
-
-
-
-      // EL CÓDIGO DEL TOKEN DEBE IR AQUÍ ADENTRO
-
-      getToken(messaging, { vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU' })
-
-        .then((token) => {
-
-          if (token) {
-
-            alert("TOKEN: " + token);
-
-          } else {
-
-            navigator.clipboard.writeText(token).then(() => { alert("¡Copiado! Pégalo en tu bloc de notas"); });
-
-          }
-
-        })
-
-        .catch((err) => {
-
-          alert("ERROR AL OBTENER TOKEN: " + err);
-
-        });
-
-    }
-
-
+  // ESTA ES LA LÍNEA QUE FALTA PARA DEFINIR EL REGISTRO
+  navigator.serviceWorker.register('/firebase-messaging-sw.js').then((registration) => {
+    
+    // Ahora sí, usamos "registration" aquí adentro
+    getToken(messaging, { 
+      serviceWorkerRegistration: registration, 
+      vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU' 
+    })
+    .then((token) => {
+      if (token) {
+        alert("TOKEN: " + token);
+        navigator.clipboard.writeText(token); // Aprovecha y cópialo de una vez
+      }
+    })
+    .catch((err) => {
+      console.error("Error al obtener token:", err);
+    });
 
   });
-
-}
-
+                                                                     }
 </script>
 
 
