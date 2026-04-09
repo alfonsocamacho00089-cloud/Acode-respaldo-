@@ -17,7 +17,7 @@ const messaging = firebase.messaging();
   // En tu archivo firebase-messaging-sw.js
 messaging.onBackgroundMessage((payload) => {
   // Extraemos la información del payload que viene de Firebase
-  const notificationTitle = payload.notification.title || "TuPropina"; 
+  const notificationTitle = payload.notification.title || "DropisShop"; 
   
   const notificationOptions = {
     body: payload.notification.body,
