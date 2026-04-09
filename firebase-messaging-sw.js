@@ -12,12 +12,13 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+// En tu archivo firebase-messaging-sw.js
 messaging.onBackgroundMessage((payload) => {
-  console.log('Mensaje recibido en segundo plano:', payload);
-  const notificationTitle = payload.notification.title || "TuPropina";
+  const notificationTitle = "DropisShop"; // El nombre de tu App
   const notificationOptions = {
-    body: payload.notification.body || "Nueva actualización de tasa disponible",
-    icon: '/logo.png' 
+    body: payload.notification.body,
+    icon: '/logo.png', // Tu logo a color (grande)
+    badge: '/badge.png', // Tu icono blanco transparente (barra superior)
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
