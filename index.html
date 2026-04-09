@@ -972,16 +972,7 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
 
 
 
-  onMessage(messaging, (payload) => {
-  console.log('Notificación recibida:', payload);
-  // Busca el botón que dice "REVISAR" (o el nombre de tu pestaña) y le hace clic
-  const tabs = Array.from(document.querySelectorAll('button, div, a'));
-  const btnRevisar = tabs.find(el => el.textContent.trim().toUpperCase() === 'REVISAR');
-  if (btnRevisar) btnRevisar.click();
-  
-  alert("Mensaje de prueba: " + payload.notification.body);
-});
-
+  const messaging = getMessaging(app);
 
   // Esto pide permiso sin detener el resto de la página
 
