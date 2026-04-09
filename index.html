@@ -933,8 +933,7 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
 
 
 
-  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js";
-
+  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js";
 
 
   const firebaseConfig = {
@@ -973,8 +972,15 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
 
 
 
-  const messaging = getMessaging(app);
-
+  onMessage(messaging, (payload) => {
+  console.log('Notificación recibida:', payload);
+  // Busca el botón que dice "REVISAR" (o el nombre de tu pestaña) y le hace clic
+  const tabs = Array.from(document.querySelectorAll('button, div, a'));
+  const btnRevisar = tabs.find(el => el.textContent.trim().toUpperCase() === 'REVISAR');
+  if (btnRevisar) btnRevisar.click();
+  
+  alert("Mensaje de prueba: " + payload.notification.body);
+});
 
 
   // Esto pide permiso sin detener el resto de la página
