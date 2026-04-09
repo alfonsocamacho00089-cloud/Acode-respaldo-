@@ -960,24 +960,36 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
         
         return Notification.requestPermission().then((permission) => {
           if (permission === 'granted') {
+            // Llamada a getToken pasando el registro del SW
             return getToken(messaging, { 
               vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU',
-              serviceWorkerRegistration: registration // Vinculamos el SW registrado
+              serviceWorkerRegistration: registration 
             });
           }
         });
       })
       .then((token) => {
+        // --- AQUÍ VA TU BLOQUE DE COPIADO ---
         if (token) {
-          console.log("Token obtenido:", token);
-          // Opcional: Mostrarlo para copiarlo fácilmente
-          // prompt("Copia tu token:", token);
+            console.log("Token obtenido:", token);
+            alert("TOKEN: " + token);
+            // Intentar copiar al portapapeles
+            navigator.clipboard.writeText(token).then(() => {
+                console.log("¡Token copiado satisfactoriamente!");
+            }).catch(err => {
+                console.warn("No se pudo copiar automáticamente: ", err);
+            });
+        } else {
+            alert("No hay token disponible");
         }
+        // ------------------------------------
       })
       .catch((err) => {
         console.error("Error en el flujo de notificaciones:", err);
+        alert("ERROR AL OBTENER TOKEN: " + err);
       });
   }
 </script>
 </body>
+
 </html>
