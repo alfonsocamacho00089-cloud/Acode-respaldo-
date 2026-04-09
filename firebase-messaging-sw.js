@@ -14,11 +14,17 @@ const messaging = firebase.messaging();
 
 // En tu archivo firebase-messaging-sw.js
 messaging.onBackgroundMessage((payload) => {
-  const notificationTitle = "DropisShop"; // El nombre de tu App
+  // En tu archivo firebase-messaging-sw.js
+messaging.onBackgroundMessage((payload) => {
+  // Extraemos la información del payload que viene de Firebase
+  const notificationTitle = payload.notification.title || "TuPropina"; 
+  
   const notificationOptions = {
     body: payload.notification.body,
-    icon: '/logo.png', // Tu logo a color (grande)
-    badge: '/badge.png', // Tu icono blanco transparente (barra superior)
+    icon: '/logo.png', 
+    badge: '/badge.png',
+    // ESTA LÍNEA ES LA QUE FALTA:
+    image: payload.notification.image || payload.data.image 
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
