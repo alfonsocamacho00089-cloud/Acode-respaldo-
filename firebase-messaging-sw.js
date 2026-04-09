@@ -26,22 +26,22 @@ const messaging = firebase.messaging();
 
 
 
+// firebase-messaging-sw.js
 messaging.onBackgroundMessage((payload) => {
+  console.log('[sw.js] Mensaje recibido:', payload);
 
-  console.log('Mensaje recibido en segundo plano:', payload);
-
-  const notificationTitle = payload.notification.title || "TuPropina";
-
+  const notificationTitle = "DropisChat";
+  
+  // Usamos el operador ?. para evitar errores si no hay notificación
   const notificationOptions = {
-
-    body: payload.notification.body || "Nueva actualización de tasa disponible",
-
-    icon: '/logo.png' 
-
+    body: payload.notification?.body || "Tienes un nuevo mensaje", 
+    icon: '/logo.png',
+    badge: '/badge.png',
+    // Recomendado: Agrega una etiqueta para que los mensajes del mismo chat se agrupen
+    tag: 'new-message',
+    renotify: true
   };
 
-
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
-
+  // IMPORTANTE: Retornar la promesa para que el navegador mantenga vivo el SW
+  return self.registration.showNotification(notificationTitle, notificationOptions);
 });
