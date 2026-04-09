@@ -12,8 +12,8 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
-// En tu archivo firebase-messaging-sw.js
-messaging.onBackgroundMessage((payload) => {
+
+
   // En tu archivo firebase-messaging-sw.js
 messaging.onBackgroundMessage((payload) => {
   // Extraemos la información del payload que viene de Firebase
