@@ -11,18 +11,16 @@ async function generarDropisID(nombre) {
 // Función para registrarte como el primer COMERCIO (Jurídica)
 async function crearCuentaMaestra(nombreUsuario) {
     const idUnico = await generarDropisID(nombreUsuario);
-    const fechaVencimiento = new Date();
-    fechaVencimiento.setDate(fechaVencimiento.getDate() + 3); // 3 días de prueba
-
+    
     try {
-        await db.collection("usuarios").doc(idUnico).set({
+        // CAMBIO AQUÍ: Usamos .ref() y .set() para Realtime Database
+        await db.ref('usuarios/' + idUnico).set({
             nombre: nombreUsuario,
             tipo_legal: "Jurídica",
             perfil: "Comercio",
             id_publico: idUnico,
             plan: "Trial",
-            vencimiento: fechaVencimiento,
-            creado_en: firebase.firestore.FieldValue.serverTimestamp()
+            creado_en: Date.now() // Guardamos la fecha actual
         });
         
         console.log("¡Éxito! Tu ID es: " + idUnico);
