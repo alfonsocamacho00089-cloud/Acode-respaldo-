@@ -962,15 +962,23 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
             });
           })
           .then((token) => {
-            if (token) {
-              console.log("Token:", token);
-              alert("TOKEN OBTENIDO");
-              // Copiado automático corregido (se hace si SI hay token)
-              navigator.clipboard.writeText(token);
-            } else {
-              console.warn("No se pudo obtener el token.");
-            }
-          })
+        if (token) {
+          console.log("Token:", token);
+          
+          // CORRECCIÓN: Mostramos el token real en el alert
+          alert("TOKEN: " + token);
+
+          // Copiado automático
+          navigator.clipboard.writeText(token).then(() => {
+              console.log("Copiado al portapapeles");
+          }).catch(err => {
+              // Si falla el copiado automático, esto permite copiarlo manualmente
+              prompt("Copia el token manualmente:", token);
+          });
+        } else {
+          alert("No se recibió ningún token de Firebase.");
+        }
+      })
           .catch((err) => {
             console.error("Error:", err);
             alert("ERROR: " + err);
