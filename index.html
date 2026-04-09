@@ -927,14 +927,13 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
 
 <script type="module">
 
+
+
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
 
 
 
-  import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js";
-
-
-
+  import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging.js";
 
 
 
@@ -978,28 +977,34 @@ document.querySelectorAll('input').forEach(i => i.addEventListener('input', actu
 
 
 
-
-
-
-
   // Esto pide permiso sin detener el resto de la página
 
 
 
 if ('Notification' in window) {
 
-  Notification.requestPermission().then((permission) => {
 
-    
+
+Notification.requestPermission().then((permission) => {
+
+
 
     // El aviso de "Desea recibir notificaciones" sale gracias a la línea de arriba
 
+
+
     if (permission === 'granted') {
+
   console.log('Notificaciones activadas.');
 
+
+
   // ESTA ES LA LÍNEA QUE FALTA PARA DEFINIR EL REGISTRO
+
   navigator.serviceWorker.register('./firebase-messaging-sw.js')
+
     // Ahora sí, usamos "registration" aquí adentro
+
     getToken(messaging, { vapidKey: 'BIrsA9YbBXfIuo4PTMrKRtuktRsK2RbK0XevupuofGGOUDy9w5VZ9yaXbZXsenXppmFsR62-2B7jBOG0Z8RdxvU' })
 
 
@@ -1037,29 +1042,6 @@ navigator.clipboard.writeText(token).then(() => { alert("¡Copiado! Pégalo en t
 
 
 alert("ERROR AL OBTENER TOKEN: " + err);
-<script type="module">
-
-});
-
-
-
-
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1067,13 +1049,18 @@ alert("ERROR AL OBTENER TOKEN: " + err);
 
 
 
+}
 
+
+
+});
 
 
 
 }
 
-  
+
+
 </script>
 
 
@@ -1083,3 +1070,4 @@ alert("ERROR AL OBTENER TOKEN: " + err);
 
 
   </html>
+
